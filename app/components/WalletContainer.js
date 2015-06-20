@@ -1,14 +1,17 @@
 'use strict';
 
+var _ = require('lodash');
+
 var React = require('react');
 var Reflux = require('reflux');
 var WalletActions = require('./WalletActions');
 var WalletStore = require('./WalletStore');
 var WIFInput = require('./WIFInput');
 var KeysForm = require('./KeysForm');
+var PasswordInput = require('./PasswordInput');
 
-var WIFContainer = React.createClass({
-    displayName: 'WIFContainer',
+var WalletContainer = React.createClass({
+    displayName: 'WalletContainer',
     getInitialState: function() {
         return {
             wifBody: ''
@@ -25,10 +28,17 @@ var WIFContainer = React.createClass({
         WalletActions.wifImport(newWif);
     },
     componentDidMount: function() {
+        WalletActions.storedPassword.listen(this.onStoredPassword);
         this.unsubscribe = WalletStore.listen(this.onWalletChange);
     },
     componentWillUnmount: function() {
         this.unsubscribe();
+    },
+    onStoredPassword: function() {
+        console.log('New password saved');
+        this.setState({
+            wifBody: ''
+        });
     },
     onWalletChange: function(walletChange) {
         if (walletChange) {
@@ -44,20 +54,46 @@ var WIFContainer = React.createClass({
             });
         }
     },
-    render: function() {
-        if (this.state.keys) {
-            return (
-                <div>
+    _renderInit: function() {
+        return (
+            <PasswordInput init={true} />
+        );
+    },
+    _renderLogin: function() {
+        return (
+            <PasswordInput init={false} />
+        );
+    },
+    _renderWif: function() {
+        return (
+            <WIFInput content={this.getContent()} onChange={this.onBodyChange} onClick={this.onImportClick}/>
+        );
+    },
+    _renderWallet: function() {
+        return (
+            <div>
                 <WIFInput content={this.getContent()} onChange={this.onBodyChange} onClick={this.onImportClick}/>
                 <KeysForm content={this.state.keys} />
                 </div>
-            );
+        );
+    },
+    render: function() {
+        console.log('Render : ' + WalletStore.isInitialized());
+        if (WalletStore.isInitialized()) {
+            if (WalletStore.isAuthenticated()) {
+                if (this.state.keys) {
+                    return this._renderWallet();
+                } else {
+                    return this._renderWif();
+                }
+            } else {
+                return this._renderLogin();
+            }
         } else {
-            return (
-                <WIFInput content={this.getContent()} onChange={this.onBodyChange} onClick={this.onImportClick}/>
-            );
+            return this._renderInit();
         }
+
     }
 });
 
-module.exports = WIFContainer;
+module.exports = WalletContainer;
