@@ -64,6 +64,7 @@ var WalletStore = Reflux.createStore({
         });
     },
     onWifImport: function(newWif) {
+        console.log('New WIF: ' + newWif);
         wif = newWif;
         try {
             var privKey = PrivateKey.fromWIF(wif);

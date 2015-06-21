@@ -23,8 +23,8 @@ var WalletContainer = React.createClass({
     onBodyChange: function(newWif) {
         this.state.wifBody = newWif;
     },
-    onImportClick: function(newWif) {
-        console.log('Import!');
+    onImportClick: function() {
+        var newWif = document.getElementById('wif-input').value;
         WalletActions.wifImport(newWif);
     },
     componentDidMount: function() {

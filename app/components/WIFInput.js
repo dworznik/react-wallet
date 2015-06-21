@@ -26,7 +26,7 @@ var WIFInput = React.createClass({
     render: function() {
         return (
             <form>
-        <Input type='textarea'  placeholder='Paste WIF' onChange={this.onChange}  />
+        <Input id='wif-input' type='textarea'  placeholder='Paste WIF' onChange={this.onChange}  />
         <ButtonInput value='Import' onClick={this.onClick} />
         </form>
         );
