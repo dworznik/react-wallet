@@ -12,21 +12,28 @@ var ButtonInput = Bootstrap.ButtonInput;
 
 var WIFInput = React.createClass({
     displayName: 'WIFInput',
+    getInitialState: function() {
+        return {
+            wif: null
+        };
+    },
     propTypes: {
         content: React.PropTypes.string,
-        onChange: React.PropTypes.func,
-        onClick: React.PropTypes.func
+        onImportClick: React.PropTypes.func
     },
     onChange: function(e) {
-        this.props.onChange();
+        this.setState({
+            wif: e.target.value.trim()
+        });
     },
     onClick: function(e) {
-        this.props.onClick();
+        var wif = this.state.wif;
+        this.props.onImportClick(wif);
     },
     render: function() {
         return (
             <form>
-        <Input id='wif-input' type='textarea'  placeholder='Paste WIF' onChange={this.onChange}  />
+        <Input ref='wif' type='textarea'  placeholder='Paste WIF' onChange={this.onChange}  />
         <ButtonInput value='Import' onClick={this.onClick} />
         </form>
         );

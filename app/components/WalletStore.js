@@ -16,7 +16,6 @@ var network = bitcore.Networks.testnet;
 var wif = "";
 
 var jsonToKeys = function(data) {
-    console.log('co: ' + JSON.stringify(data));
     return _.transform(data, function(result, v, k) {
         if (k == 'privKey') {
             result[k] = PrivateKey.fromJSON(v);
@@ -59,6 +58,8 @@ var WalletStore = Reflux.createStore({
                         pubKey: keys.pubKey.toString(),
                         address: keys.address.toString()
                     });
+                } else {
+                    that.trigger({});
                 }
             });
         });

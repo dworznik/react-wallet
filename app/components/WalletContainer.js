@@ -23,8 +23,7 @@ var WalletContainer = React.createClass({
     onBodyChange: function(newWif) {
         this.state.wifBody = newWif;
     },
-    onImportClick: function() {
-        var newWif = document.getElementById('wif-input').value;
+    onImportClick: function(newWif) {
         WalletActions.wifImport(newWif);
     },
     componentDidMount: function() {
@@ -66,13 +65,13 @@ var WalletContainer = React.createClass({
     },
     _renderWif: function() {
         return (
-            <WIFInput content={this.getContent()} onChange={this.onBodyChange} onClick={this.onImportClick}/>
+            <WIFInput content={this.getContent()} onChange={this.onBodyChange} onImportClick={this.onImportClick}/>
         );
     },
     _renderWallet: function() {
         return (
             <div>
-                <WIFInput content={this.getContent()} onChange={this.onBodyChange} onClick={this.onImportClick}/>
+                <WIFInput content={this.getContent()} onChange={this.onBodyChange} onImportClick={this.onImportClick}/>
                 <KeysForm content={this.state.keys} />
                 </div>
         );
