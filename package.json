@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server",
     "postinstall": "node heroku",
-    "test": "karma start karma.conf.js"
+    "test": "./node_modules/.bin/karma start karma.conf.js"
   },
   "repository": {
     "type": "git",
