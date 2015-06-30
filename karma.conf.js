@@ -1,6 +1,8 @@
+var RewirePlugin = require("rewire-webpack");
+
 module.exports = function(config) {
     config.set({
-        browsers: ['PhantomJS'],
+        browsers: ['SlimerJS'],
         files: [{
             pattern: 'tests.webpack.js',
             watched: false
@@ -12,6 +14,9 @@ module.exports = function(config) {
         reporters: ['dots'],
         singleRun: true,
         webpack: {
+            plugins: [
+                new RewirePlugin()
+            ],
             module: {
                 loaders: [{
                     test: /\.jsx?$/,

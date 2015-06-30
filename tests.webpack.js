@@ -10,6 +10,7 @@ require('core-js/es5');
  * tests. This will be used to clear the module cache before each test.
  */
 var projectContext = require.context('./app', true, /.*\.jsx?$/);
+
 var projectModuleIds = Immutable.Set(
     projectContext.keys().map(module => (
         String(projectContext.resolve(module))
@@ -40,5 +41,5 @@ afterEach(() => {
 /**
  * Load each test using webpack's dynamic require with contexts.
  */
-var context = require.context('./test', true, /\.js?$/);
+var context = require.context('./test', true, /\.js$/);
 context.keys().forEach(context);

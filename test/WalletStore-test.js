@@ -1,16 +1,46 @@
 'use strict';
 
+var rewire = require('rewire');
+var rewireModule = require('./rewire-module');
+
+var textEncoding = require('text-encoding');
+
 describe('WalletStore', () => {
-  var WalletStore;
-  var React = require('react');
-  var TestUtils = require('react/lib/ReactTestUtils');
+    var WalletStore;
+    var WalletContainer;
+    var WalletActions = require('../app/components/WalletActions');
+    var React = require('react');
+    var TestUtils = require('react/lib/ReactTestUtils');
+    var WalletContainerMock = React.createClass({
+        onWalletChange: function(walletChange) {
+            console.log('MOCK: ' + walletChange);
+        },
+        render: function() {
+            return <div />;
+        },
+        componentDidMount: function() {
+            WalletActions.storedPassword.listen(this.onStoredPassword);
+            this.unsubscribe = WalletStore.listen(this.onWalletChange);
+        }
+    });
 
-  beforeEach(() => {
-    WalletStore = require('../app/components/WalletStore');
-  });
+    beforeEach(() => {
+        global.TextEncoder = textEncoding.TextEncoder;
+        WalletStore = rewire('../app/components/WalletStore');
+        rewireModule(WalletStore, {
+            WalletContainer: WalletContainerMock
+        });
+    });
 
-  it('can import wif', () => {
-    var val = '';
-    expect(val).toBe('');
-  });
+    afterEach(() => {
+            console.log('END');
+        }),
+
+        it('can import wif', () => {
+            TestUtils.renderIntoDocument(<WalletContainerMock />);
+            WalletStore.onWifImport('L4gs7CaHLWkHug2AafS6sP8NDRXw4saziAiejBcPXkppTSungb6F');
+            var val = '';
+            jasmine.clock().tick();
+            expect(val).toBe('');
+        });
 });

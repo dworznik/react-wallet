@@ -44,13 +44,20 @@
   },
   "devDependencies": {
     "core-js": "^0.9.18",
+    "fs": "0.0.2",
     "immutable": "^3.7.4",
     "jasmine": "^2.3.1",
     "jasmine-core": "^2.3.4",
     "karma": "^0.12.37",
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.2.0",
+    "karma-slimerjs-launcher": "^0.1.2",
     "karma-webpack": "^1.5.1",
-    "phantomjs": "^1.9.17"
+    "module": "0.0.1",
+    "qfunction": "0.0.1",
+    "rewire": "^2.3.4",
+    "rewire-webpack": "^1.0.0",
+    "slimerjs": "^0.9.5",
+    "text-encoding": "^0.5.2"
   }
 }
