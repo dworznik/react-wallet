@@ -79,11 +79,13 @@ var WalletStore = Reflux.createStore({
                     address: address
                 }
             });
+            console.log('dupa');
             this.trigger({
                 privKey: privKey.toString(),
                 pubKey: pubKey.toString(),
                 address: address.toString()
             });
+            console.log('zbita');
         } catch (e) {
             console.log('Error: ' + e);
             this.trigger(null);

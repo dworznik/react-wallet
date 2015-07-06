@@ -40,6 +40,7 @@ var WalletContainer = React.createClass({
         });
     },
     onWalletChange: function(walletChange) {
+        console.log('Change');
         if (walletChange) {
             console.log('Wallet change: ' + JSON.stringify(walletChange));
             var wifBody = this.state.wifBody;

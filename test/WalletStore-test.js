@@ -2,7 +2,7 @@
 
 var rewire = require('rewire');
 var rewireModule = require('./rewire-module');
-
+var jasmineReact = require('jasmine-react-helpers');
 var textEncoding = require('text-encoding');
 
 describe('WalletStore', () => {
@@ -33,14 +33,15 @@ describe('WalletStore', () => {
     });
 
     afterEach(() => {
-            console.log('END');
-        }),
+        console.log('END');
+    });
 
-        it('can import wif', () => {
-            TestUtils.renderIntoDocument(<WalletContainerMock />);
-            WalletStore.onWifImport('L4gs7CaHLWkHug2AafS6sP8NDRXw4saziAiejBcPXkppTSungb6F');
-            var val = '';
-            jasmine.clock().tick();
-            expect(val).toBe('');
-        });
+    it('can import wif', () => {
+        jasmineReact.spyOnClass(WalletContainerMock, 'onWalletChange').and.callThrough();
+        TestUtils.renderIntoDocument(<WalletContainerMock />);
+        WalletStore.onWifImport('L4gs7CaHLWkHug2AafS6sP8NDRXw4saziAiejBcPXkppTSungb6F');
+        var val = '';
+        jasmine.clock().tick();
+        expect(jasmineReact.classPrototype(WalletContainerMock).onWalletChange).toHaveBeenCalled();
+    });
 });
